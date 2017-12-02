@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  get '/' => "users#new"
+  get '/talks' => "talks#index"
 
+  get '/' => "users#new"
   get "/login" => "users#login_form"
   post "/login" => "users#login"
   post "/users/create" => "users#create"

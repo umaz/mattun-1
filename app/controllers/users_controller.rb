@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     if @user
       session[:user_id] = @user.id
       flash[:notice] = "ログインしました"
-      redirect_to("/users/index")
+      redirect_to("/talks")
     else
       @error_message = "ユーザー名またはパスワードが間違っています"
       @name = params[:name]
@@ -33,7 +33,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = "ユーザー登録が完了しました"
-      redirect_to("/users/index")
+      redirect_to("/talks")
     else
       render("users/new")
     end
