@@ -10,33 +10,35 @@
 
   <body>
     <header>
-      <div class="header-logo">
-        <% if @current_user %>
-          <%= link_to("Mattun", "/users/index") %>
-        <% else %>
-          <%= link_to("Mattun", "/") %>
-        <% end %>
-      </div>
-      <ul class="header-menus">
-        <% if @current_user %>
-          <li>
-            <%= link_to(@current_user.name, "/users/#{@current_user.id}") %>
+      <nav class="navbar navbar-expand navbar-light bg-light">
+        <div class="mr-auto">
+          <% if @current_user %>
+          <%= link_to("Mattun", "/users/index", :class => "navbar-brand" ) %>
+          <% else %>
+          <%= link_to("Mattun", "/", :class => "navbar-brand") %>
+          <% end %>
+        </div>
+        <ul class="navbar-nav">
+          <% if @current_user %>
+          <li class="nav-item">
+            <%= link_to(@current_user.name, "/users/#{@current_user.id}", :class => "nav-link") %>
           </li>
-          <li>
-            <%= link_to("ユーザー一覧", "/users/index") %>
+          <li class="nav-item">
+            <%= link_to("ユーザー一覧", "/users/index", :class => "nav-link") %>
           </li>
-          <li>
-            <%= link_to("ログアウト", "/logout", {method: :post}) %>
+          <li class="nav-item">
+            <%= link_to("ログアウト", "/logout", {:method => :post, :class => "nav-link"}) %>
           </li>
-        <% else %>
-          <li>
-            <%= link_to("新規登録", "/") %>
+          <% else %>
+          <li class="nav-item">
+            <%= link_to("新規登録", "/", :class => "nav-link") %>
           </li>
-          <li>
-            <%= link_to("ログイン", "/login") %>
+          <li class="nav-item">
+            <%= link_to("ログイン", "/login", :class => "nav-link") %>
           </li>
-        <% end %>
-      </ul>
+          <% end %>
+        </ul>
+      </nav>
     </header>
 
     <% if flash[:notice] %>
