@@ -3,11 +3,33 @@ class TalksController < ApplicationController
 
   def index
     @users = User.all
-    @user_current = session
+    @talk = Talk.new
+    @talks = TalkUser.where(user_id: @current_user.id).map do |talk|
+      talk.talk
+    end
   end
 
   def show
+    @users = User.all
+    @talk = Talk.new
+    @talks = TalkUser.where(user_id: @current_user.id).map do |talk|
+      talk.talk
+    end
     @talk = Talk.find_by(id: params[:id])
+    @message = Message.new
+    @messages = Message.where(talk_id: params[:id])
   end
 
+  def create
+    @talk = Talk.new(
+      name: params[:name],
+      talk_users_attributes: [
+        {user_id: params[:user_id]},
+        {user_id: @current_user.id}
+      ]
+    )
+    if @talk.save
+      redirect_to("/talks/#{@talk.id}")
+    end
+  end
 end

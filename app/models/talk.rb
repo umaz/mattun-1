@@ -1,5 +1,4 @@
 class Talk < ApplicationRecord
-
   has_many :users, through: :talk_users
   has_many :talk_users
   has_many :messages

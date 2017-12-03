@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
+  post 'message/create' => "message#create"
+
   get '/talks' => "talks#index"
+  get '/talks/:id' => "talks#show"
+  post "/talks/create" => "talks#create"
 
   get '/' => "users#new"
   get "/login" => "users#login_form"
@@ -8,7 +12,6 @@ Rails.application.routes.draw do
   get "/users/index" => "users#index"
   post "/logout" => "users#logout"
   get "/users/:id" => "users#show"
-
 
 
 
