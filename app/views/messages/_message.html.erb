@@ -1,0 +1,21 @@
+<% if message.user_id == @current_user.id %>
+  <p class="text-right" style="margin-bottom:-3%;"><%= @chat_users[message.user_id] %></p>
+  <div class="d-flex justify-content-end">
+    <div class="card message right list-group-item-success">
+      <div class="card-body">
+        <%= message.message %>
+      </div>
+    </div>
+  </div>
+  <p class="text-right"><%= message.created_at %></p>
+<% else %>
+<p class="text-left" style="margin-bottom:-3%;"><%= @chat_users[message.user_id] %></p>
+  <div class="d-flex justify-content-start">
+    <div class="card message left">
+      <div class="card-body">
+        <%= message.message %>
+      </div>
+    </div>
+  </div>
+  <p class="text-left"><%= message.created_at %></p>
+<% end %>

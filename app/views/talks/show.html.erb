@@ -7,13 +7,7 @@
             <h5>トーク一覧</h5>
           </div>
           <ul class="list-group">
-            <% @talks.each do |talk| %>
-              <%= link_to("/talks/#{talk.id}") do %>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <%= talk.name %>
-                </li>
-              <% end %>
-            <% end %>
+            <%= render @talks %>
           </ul>
         </div>
       </div>
@@ -22,35 +16,17 @@
           <div class="card-header">
             <h5><%= @talk.name %></h5>
           </div>
-          <div class="card-body board">
-            <% @messages.each do |message| %>
-              <% if message.user_id == @current_user.id %>
-                <div class="d-flex justify-content-end">
-                  <div class="card message right list-group-item-success">
-                    <div class="card-body">
-                      <%= message.message %>
-                    </div>
-                  </div>
-                </div>
-              <% else %>
-                <div class="d-flex justify-content-start">
-                  <div class="card message left">
-                    <div class="card-body">
-                      <%= message.message %>
-                    </div>
-                  </div>
-                </div>
-              <% end %>
-            <% end %>
+          <div class="card-body board" id="talks">
+            <%= render @messages %>
           </div>
           <div class="card-footer">
-            <%= form_tag("/message/create") do %>
+            <%= form_tag("/message/create", :remote => true, :id => "form-ajax") do %>
               <input type="hidden" name="talk_id" value="<%= @talk.id %>">
               <input type="hidden" name="user_id" value="<%= @current_user.id %>">
               <div class="input-group">
                 <input type="text" name="message" class="form-control" placeholder="Type your message here" required>
                 <span class="input-group-btn">
-                  <button type="submit" class="btn btn-success">送信</button>
+                  <button type="submit" class="btn btn-success" id="btn">送信</button>
                 </span>
               </div>
             <% end %>
@@ -63,38 +39,15 @@
             <h5>ユーザー</h5>
           </div>
           <ul class="list-group">
-            <% @users.each do |user| %>
-              <% if user.id != @current_user.id %>
-                <li class="list-group-item" data-toggle="modal" data-target="#<%= user.id %>">
-                  <%= user.name %>
-                  <div class="modal fade" id="<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="<%= user.id %>" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="<%= user.id %>"><%= user.name %></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          よろしくです
-                        </div>
-                        <div class="modal-footer">
-                          <%= form_tag("/talks/create") do %>
-                            <input type="hidden" name="name" value="<%= user.name %>-<%= @current_user.name %>">
-                            <input type="hidden" name="user_id" value="<%= user.id %>">
-                            <button type="submit" class="btn btn-primary">トークする</button>
-                          <% end %>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              <% end %>
-            <% end %>
+            <%= render @users %>
           </ul>
         </div>
       </div>
     </div>
   </div>
 </main>
+<%= javascript_tag do %>
+  $(document).ready(function(){
+    App.MakeMessageChannel(<%= @talk.id %>)
+  });
+<% end %>

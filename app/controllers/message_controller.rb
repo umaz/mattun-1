@@ -6,6 +6,7 @@ class MessageController < ApplicationController
       message: params[:message]
     )
     if @message.save
+      TalkChannel.broadcast_to Talk.find(params[:talk_id]), message: @message
       redirect_to("/talks/#{@message.talk_id}")
     end
   end

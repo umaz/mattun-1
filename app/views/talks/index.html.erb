@@ -7,13 +7,7 @@
             <h5>トーク一覧</h5>
           </div>
           <ul class="list-group">
-            <% @talks.each do |talk| %>
-              <%= link_to("/talks/#{talk.id}") do %>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                  <%= talk.name %>
-                </li>
-              <% end %>
-            <% end %>
+            <%= render @talks %>
           </ul>
         </div>
       </div>
@@ -42,35 +36,7 @@
             <h5>ユーザー</h5>
           </div>
           <ul class="list-group">
-            <% @users.each do |user| %>
-              <% if user.id != @current_user.id %>
-                <li class="list-group-item" data-toggle="modal" data-target="#<%= user.id %>">
-                  <%= user.name %>
-                  <div class="modal fade" id="<%= user.id %>" tabindex="-1" role="dialog" aria-labelledby="<%= user.id %>" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="<%= user.id %>"><%= user.name %></h5>
-                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          よろしくです
-                        </div>
-                        <div class="modal-footer">
-                          <%= form_tag("/talks/create") do %>
-                            <input type="hidden" name="name" value="<%= user.name %>-<%= @current_user.name %>">
-                            <input type="hidden" name="user_id" value="<%= user.id %>">
-                            <button type="submit" class="btn btn-primary">トークする</button>
-                          <% end %>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-              <% end %>
-            <% end %>
+            <%= render @users %>
           </ul>
         </div>
       </div>
