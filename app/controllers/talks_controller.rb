@@ -18,12 +18,9 @@ class TalksController < ApplicationController
     @talk = Talk.find_by(id: params[:id])
     @message = Message.new
     @messages = Message.where(talk_id: params[:id])
-    chat_users = @messages.map do |message|
-      message.user
-    end
     @chat_users = Hash.new
-    chat_users.each do |user|
-      @chat_users[user.id] = user.name
+    TalkUser.where(talk_id: params[:id]).each do |user|
+      @chat_users[user.user.id] = user.user.name
     end
   end
 

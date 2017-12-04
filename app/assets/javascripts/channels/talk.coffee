@@ -9,6 +9,5 @@ App.MakeMessageChannel = (talk_id)->
       console.log 'disconnected'
 
     received: (data) ->
+      # Called when there's incoming data on the websocket for this channel
       location.reload()
-          # Called when there's incoming data on the websocket for this channel
-#      $('#talks').append <div class="d-flex justify-content-start"><div class="card message left"><div class="card-body"><%= message.message %></div></div></div>
